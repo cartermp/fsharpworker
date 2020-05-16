@@ -10,9 +10,8 @@ open Microsoft.Extensions.Hosting
 module Program =
     let createHostBuilder args =
         Host.CreateDefaultBuilder(args)
-            .ConfigureServices(fun x ->
-                webBuilder.UseStartup<Startup>() |> ignoreservices.AddHostedService<Worker>();
-            )
+            .ConfigureServices(fun hostContext services ->
+                services.AddHostedService<Worker>() |> ignore)
 
     [<EntryPoint>]
     let main args =
