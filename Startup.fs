@@ -14,8 +14,9 @@ type Worker(logger: ILogger<Worker>) =
     override _.ExecuteAsync(ct: CancellationToken) =
         async {
             while (not ct.IsCancellationRequested) do
-                let msg = sprintf "Worker running at: %O" DateTime.Now
-                logger.LogInformation msg
-                return! (Task.Delay(1000, ct) |> Async.AwaitTask)
-        } |> Async.StartAsTask :> Task
+                logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now)
+                do! Async.Sleep(1000)
+        }
+        |> Async.StartAsTask
+        :> Task // need to convert into the parameter-less task
         
