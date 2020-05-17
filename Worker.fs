@@ -13,7 +13,7 @@ type Worker(logger: ILogger<Worker>) =
 
     override _.ExecuteAsync(ct: CancellationToken) =
         async {
-            while (not ct.IsCancellationRequested) do
+            while not ct.IsCancellationRequested do
                 logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now)
                 do! Async.Sleep(1000)
         }
